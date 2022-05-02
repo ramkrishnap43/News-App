@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>News App</title>
+    <link rel="stylesheet" href="styles/index.css">
+    
+  </head>
+  <body>
+    <!-- Give Navbar with id "navbar"  -->
+    <!-- Navbar will have input with id search_input and a link to home page i.e. index.html -->
+    <!-- Sidebar will have id "sidebar"  -->
+    <!-- Give link to top headlines of countries in sidebar with id as their country codes 
+    india :- in
+    china :- ch
+    usa :- us
+    uk : uk
+    Newzeland :- nz -->
+
+    <!-- Append results inside div with id "results"  -->
+    <!-- News divs will have class "news"  -->
+
+    <div id="navbar"></div>
+
+    <h2>Countries</h2>
+    <div id="sidebar" > 
+      
+          <button id="in" >India</button>
+          <button id="ch">China</button>
+          <button id="us">USA</button>
+          <button id="uk">UK</button>
+          <button id="nz">New Zealand</button>
+
+      </div>
+
+      <div id="result"></div>
+      <div id="news"></div>
+
+  </body>
+</html>
+<script type="module"  >
+
+
+import  navbar  from "./components/navbar.js"
+
+document.getElementById("navbar").innerHTML = navbar()
+
+
+ 
+
+   document.getElementById("in").addEventListener("click", countryNews);
+
+   
+
+    async function countryNews(){
+     
+
+      try{
+        let res = await fetch(`https://masai-mock-api.herokuapp.com/news/top-headlines?country=in`);
+        let data = await res.json();
+        console.log(data.articles)
+        let data1 = data.articles
+        appendData(data1)
+      }
+      catch(error){
+        console.log(data)
+      }
+    }
+    countryNews()
+
+    async function appendData(data1){
+
+
+      data1.map(function (el){
+
+        let div = document.createElement("div");
+
+
+        let des = document.createElement("p");
+        des.innerText = el.description;
+
+        let title = document.createElement("p");
+        title.innerText = el.title;
+
+        let image = document.createElement("img");
+        image.src = el.urlToImage;
+
+        div.append(des,title,image);
+
+        document.getElementById("result").append(div)
+
+      })
+
+    }
+
+
+
+    // document.getElementById("ch").addEventListener("click", countryNewsch);
+
+
+    // async function countryNewsch(){
+
+    //   try{
+    //     let res = await fetch(`https://masai-mock-api.herokuapp.com/news/top-headlines?country=ch`);
+    //     let data = await res.json();
+    //     console.log(data.articles)
+    //     let data2 = data.articles
+    //     appendData(data2)
+    //   }
+    //   catch(error){
+    //     console.log(data)
+    //   }
+    //   }
+    //   countryNewsch()
+
+    //   async function appendData(data2){
+
+
+    //   data1.map(function (el){
+
+    //     let div = document.createElement("div");
+
+
+    //     let des = document.createElement("p");
+    //     des.innerText = el.description;
+
+    //     let title = document.createElement("p");
+    //     title.innerText = el.title;
+
+    //     let image = document.createElement("img");
+    //     image.src = el.urlToImage;
+
+    //     div.append(des,title,image);
+
+    //     document.getElementById("result").append(div)
+
+    //   })
+
+    //   }
+    
+      
+
+
+
+    
+
+     
+
+   
+
+    
+      
+    
+
+
+
+
+ 
+
+</script>
+
+
